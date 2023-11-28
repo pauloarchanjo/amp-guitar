@@ -1,6 +1,6 @@
 # Amp_Guitar-for-Web
-Amplificador de Guitarra feito com a Tríade Web (HTML, CSS e JavaScript).
+Guitar amp made with the Triad Web (HTML, CSS and JavaScript).
 
 ![Screenshot](screenshot.png)
 
-Este código foi feito em 2022, em um estudo da programação web.
+This code was made in 2022, in a study of web programming.
