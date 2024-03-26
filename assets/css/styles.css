@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap');
 
+/* Estilos globais */
 body {
     background: linear-gradient(to right, #9d50bb, #6e48aa);
     font-family: 'Poppins', sans-serif;
@@ -8,9 +9,9 @@ body {
     place-items: center;
 }
 
-.title{
-    padding-top: 1rem;
-    padding-bottom: 2rem;
+/* Estilos do título */
+.title {
+    padding: 1rem 0 2rem;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
@@ -21,13 +22,13 @@ body {
     font-weight: 600;
 }
 
-.amp-img{
-    align-items: center;
+.amp-img {
     height: 6rem;
     width: 6rem;
     margin-bottom: 0.5rem;
 }
 
+/* Estilos do canvas */
 canvas {
     position: absolute;
     top: 0;
@@ -38,23 +39,26 @@ canvas {
     pointer-events: none;
 }
 
+/* Estilos da caixa do amplificador */
 .box-amp {
     background: #28303b;
     border-radius: 1rem;
     padding: 40px;
-    box-shadow: 0px 2px 6px 6px rgba(0,0,0, 25%);
+    box-shadow: 0px 2px 6px 6px rgba(0, 0, 0, 25%);
     color: #fff;
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
 }
 
-input[type="range"]{
+/* Estilos do input de range */
+input[type="range"] {
     -webkit-appearance: none;
     background: linear-gradient(to right, #ff0000c7 25%, #ffe600 50%, #00ee34 85%);
     border-radius: 10rem;
     height: 4px;
     outline: none;
 }
-input[type="range"]::-webkit-slider-thumb{
+
+input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 1.4rem;
     width: 0.7rem;
@@ -63,6 +67,7 @@ input[type="range"]::-webkit-slider-thumb{
     cursor: pointer;
 }
 
+/* Estilos da grid */
 .grid {
     display: grid;
     grid-template-columns: auto min-content;
@@ -72,7 +77,8 @@ input[type="range"]::-webkit-slider-thumb{
     gap: 0.7rem 1.2rem;
 }
 
-.made-with-text{
+/* Estilos do texto "Feito com" */
+.made-with-text {
     text-align: center;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
@@ -81,15 +87,15 @@ input[type="range"]::-webkit-slider-thumb{
 
 .made-with{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.8rem 1rem;
+    gap: 1rem;
 }
 
-.made-html, .made-css, .made-js{
+/* Estilos dos ícones de tecnologia */
+.made-html, .made-css, .made-js {
     font-size: 2.5rem;
 }
 
+/* Reset de margem para todos os inputs */
 input {
     margin: 0;
 }
