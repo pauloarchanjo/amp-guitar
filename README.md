@@ -23,7 +23,3 @@ Contributions are welcome! If you have any ideas for improvements or new feature
 ## License
 
 AMP GUITAR is licensed under the MIT License. See `LICENSE` for more information.
-
----
-
-For more information, please visit the [project repository](https://github.com/your-username/amp-guitar). Feel free to reach out to us with any questions or feedback!
