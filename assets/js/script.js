@@ -1,74 +1,65 @@
-const volume = document.getElementById('volume');
-const bass = document.getElementById('bass');
-const mid = document.getElementById('mid');
-const treble = document.getElementById('treble');
-const visualizer = document.getElementById('visualizer');
+// Seleção de elementos DOM
+const volumeControl = document.getElementById('volume');
+const bassControl = document.getElementById('bass');
+const midControl = document.getElementById('mid');
+const trebleControl = document.getElementById('treble');
+const visualizerCanvas = document.getElementById('visualizer');
 
-const context = new AudioContext();
-const analyserNode = new AnalyserNode(context, { fftSize: 256 });
-const gainNode = new GainNode(context, { gain: volume.value });
-const bassEQ = new BiquadFilterNode(context, {
-  type: 'lowshelf',
-  frequency: 500,
-  gain: bass.value
-});
-const midEQ = new BiquadFilterNode(context, {
-  type: 'peaking',
-  Q: Math.SQRT1_2,
-  frequency: 1500,
-  gain: mid.value
-});
-const trebleEQ = new BiquadFilterNode(context, {
-  type: 'highshelf',
-  frequency: 3000,
-  gain: treble.value
-});
+// Inicialização do contexto de áudio e nós de áudio
+const audioContext = new AudioContext();
+const analyserNode = new AnalyserNode(audioContext, { fftSize: 256 });
+const gainNode = new GainNode(audioContext, { gain: volumeControl.value });
+const bassEQ = createEQNode(audioContext, 'lowshelf', 500, bassControl.value);
+const midEQ = createEQNode(audioContext, 'peaking', 1500, midControl.value, Math.SQRT1_2);
+const trebleEQ = createEQNode(audioContext, 'highshelf', 3000, trebleControl.value);
 
 setupEventListeners();
-setupContext();
-resize();
-drawVisualizer();
+initializeAudioContext();
+resizeVisualizer();
+startVisualizer();
+
+function createEQNode(context, type, frequency, gain, Q = 1) {
+  return new BiquadFilterNode(context, { type, frequency, gain, Q });
+}
 
 function setupEventListeners() {
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', resizeVisualizer);
 
-  volume.addEventListener('input', e => {
-    const value = parseFloat(e.target.value);
-    gainNode.gain.setTargetAtTime(value, context.currentTime, 0.01);
+  volumeControl.addEventListener('input', (e) => {
+    updateAudioParameter(gainNode.gain, e.target.value);
   });
 
-  bass.addEventListener('input', e => {
-    const value = parseInt(e.target.value);
-    bassEQ.gain.setTargetAtTime(value, context.currentTime, 0.01);
+  bassControl.addEventListener('input', (e) => {
+    updateAudioParameter(bassEQ.gain, e.target.value);
   });
 
-  mid.addEventListener('input', e => {
-    const value = parseInt(e.target.value);
-    midEQ.gain.setTargetAtTime(value, context.currentTime, 0.01);
+  midControl.addEventListener('input', (e) => {
+    updateAudioParameter(midEQ.gain, e.target.value);
   });
 
-  treble.addEventListener('input', e => {
-    const value = parseInt(e.target.value);
-    trebleEQ.gain.setTargetAtTime(value, context.currentTime, 0.01);
+  trebleControl.addEventListener('input', (e) => {
+    updateAudioParameter(trebleEQ.gain, e.target.value);
   });
 }
 
-async function setupContext() {
-  const guitar = await getGuitar();
-  if (context.state === 'suspended') {
-    await context.resume();
+function updateAudioParameter(parameter, value) {
+  parameter.setTargetAtTime(parseFloat(value), audioContext.currentTime, 0.01);
+}
+
+async function initializeAudioContext() {
+  const guitarStream = await getGuitarStream();
+  if (audioContext.state === 'suspended') {
+    await audioContext.resume();
   }
-  const source = context.createMediaStreamSource(guitar);
-  source
-    .connect(bassEQ)
-    .connect(midEQ)
-    .connect(trebleEQ)
-    .connect(gainNode)
-    .connect(analyserNode)
-    .connect(context.destination);
+  const source = audioContext.createMediaStreamSource(guitarStream);
+  connectAudioNodes(source, [bassEQ, midEQ, trebleEQ, gainNode, analyserNode, audioContext.destination]);
 }
 
-function getGuitar() {
+function connectAudioNodes(source, nodes) {
+  nodes.reduce((prev, curr) => prev.connect(curr), source);
+}
+
+function getGuitarStream() {
   return navigator.mediaDevices.getUserMedia({
     audio: {
       echoCancellation: false,
@@ -79,29 +70,33 @@ function getGuitar() {
   });
 }
 
-function drawVisualizer() {
-  requestAnimationFrame(drawVisualizer);
+function startVisualizer() {
+  requestAnimationFrame(startVisualizer);
 
   const bufferLength = analyserNode.frequencyBinCount;
   const dataArray = new Uint8Array(bufferLength);
   analyserNode.getByteFrequencyData(dataArray);
-  const width = visualizer.width;
-  const height = visualizer.height;
-  const barWidth = width / bufferLength;
+  drawVisualizer(dataArray);
+}
 
-  const canvasContext = visualizer.getContext('2d');
+function drawVisualizer(dataArray) {
+  const width = visualizerCanvas.width;
+  const height = visualizerCanvas.height;
+  const barWidth = width / dataArray.length;
+  const canvasContext = visualizerCanvas.getContext('2d');
   canvasContext.clearRect(0, 0, width, height);
 
-  dataArray.forEach((item, index) => {
-    const y = (item / 255) * (height / 2);
+  dataArray.forEach((value, index) => {
+    const barHeight = (value / 255) * height;
     const x = barWidth * index;
+    const color = `hsl(${(barHeight / height) * 400}, 100%, 50%)`;
 
-    canvasContext.fillStyle = `hsl(${(y / height) * 400}, 100%, 50%)`;
-    canvasContext.fillRect(x, height - y, barWidth, y);
+    canvasContext.fillStyle = color;
+    canvasContext.fillRect(x, height - barHeight, barWidth, barHeight);
   });
 }
 
-function resize() {
-  visualizer.width = visualizer.clientWidth * window.devicePixelRatio;
-  visualizer.height = visualizer.clientHeight * window.devicePixelRatio;
+function resizeVisualizer() {
+  visualizerCanvas.width = visualizerCanvas.clientWidth * window.devicePixelRatio;
+  visualizerCanvas.height = visualizerCanvas.clientHeight * window.devicePixelRatio;
 }

@@ -1,31 +1,58 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap');
 
+/* Variáveis CSS */
+:root {
+    --background-gradient: linear-gradient(to right, #691BB7 0%, #4B0096 100%);
+    --font-primary: 'Poppins', sans-serif;
+    --font-secondary: 'Barlow Semi Condensed', sans-serif;
+    --color-white: #ededed;
+    --color-black: #000;
+    --box-background: #121212;
+    --box-shadow: rgba(0, 0, 0, 0.15);
+    --range-gradient: linear-gradient(to right, #ff0000c7 25%, #ffe600 50%, #00ee34 85%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
 /* Estilos globais */
 body {
-    background: linear-gradient(to right, #9d50bb, #6e48aa);
-    font-family: 'Poppins', sans-serif;
-    color: white;
+    background: var(--background-gradient);
+    font-family: var(--font-primary);
+    color: var(--color-white);
     display: grid;
     place-items: center;
+    margin: 0;
+    padding: 0;
 }
 
 /* Estilos do título */
-.title {
-    padding: 1rem 0 2rem;
+.title-content {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    font-size: 30px;
-    font-family: 'Barlow Semi Condensed', sans-serif;
+    color: var(--color-white);
+    font-size: 24px;
+    font-family: var(--font-primary);
     font-weight: 600;
 }
 
+.title-effects {
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+
+.title-text {
+    padding: 1rem;
+}
+
 .amp-img {
-    height: 6rem;
-    width: 6rem;
-    margin-bottom: 0.5rem;
+    height: 80%;
+    width: 35%;
+    margin-top: 4rem;
 }
 
 /* Estilos do canvas */
@@ -41,28 +68,29 @@ canvas {
 
 /* Estilos da caixa do amplificador */
 .box-amp {
-    background: #28303b;
+    background: var(--box-background);
     border-radius: 1rem;
     padding: 40px;
-    box-shadow: 0px 2px 6px 6px rgba(0, 0, 0, 25%);
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
+    box-shadow: 0px 4px 18px 16px var(--box-shadow);
+    color: var(--color-white);
+    font-family: var(--font-primary);
 }
 
 /* Estilos do input de range */
 input[type="range"] {
     -webkit-appearance: none;
-    background: linear-gradient(to right, #ff0000c7 25%, #ffe600 50%, #00ee34 85%);
+    background: var(--range-gradient);
     border-radius: 10rem;
     height: 4px;
     outline: none;
+    margin: 0;
 }
 
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 1.4rem;
     width: 0.7rem;
-    background: #fff;
+    background: var(--color-white);
     border-radius: 25%;
     cursor: pointer;
 }
@@ -80,14 +108,16 @@ input[type="range"]::-webkit-slider-thumb {
 /* Estilos do texto "Feito com" */
 .made-with-text {
     text-align: center;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-primary);
     font-size: 1rem;
     padding-top: 1.5rem;
 }
 
-.made-with{
+.made-with {
     display: flex;
     gap: 1rem;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Estilos dos ícones de tecnologia */
@@ -95,7 +125,26 @@ input[type="range"]::-webkit-slider-thumb {
     font-size: 2.5rem;
 }
 
-/* Reset de margem para todos os inputs */
-input {
-    margin: 0;
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .box-amp {
+        padding: 20px;
+    }
+    
+    .title {
+        font-size: 24px;
+    }
+    
+    .amp-img {
+        height: 5rem;
+        width: 5rem;
+    }
+    
+    .made-with-text {
+        font-size: 0.9rem;
+    }
+    
+    .made-html, .made-css, .made-js {
+        font-size: 2rem;
+    }
 }

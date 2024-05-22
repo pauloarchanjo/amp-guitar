@@ -17,26 +17,26 @@
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
 
-    <title>Amplificador WEB</title>
+    <title>Amp Guitar</title>
 </head>
 <body>
     <canvas id="visualizer"></canvas>
 
-    <div class="title">
-        <div class="title-text">AMPLIFICADOR WEB</div>
+    <div class="title-content">
         <img src="assets/images/amp.png" alt="Amplificador" class="amp-img">
+        <h1 class="title-text">AMP GUITAR</h1>
     </div>
 
     <div class="box-amp">
         <div class="grid">
-            <label for="volume">Volume</label>
-            <input type="range" min="0" max="1" value=".5" step=".01" id="volume">
-            <label for="bass">Bass</label>
+            <label for="volume" class="title-effects">VOLUME</label>
+            <input type="range" min="0" max="1" value="0.5" step="0.01" id="volume">
+            <label for="bass" class="title-effects">BASS</label>
             <input type="range" min="-10" max="10" value="0" id="bass">
-            <label for="mid">Mid</label>
-            <input type="range" min="0" max="1" value=".5" step=".01" id="mid">
-            <label for="treble">Treble</label>
-            <input type="range" min="0" max="1" value=".5" step=".01" id="treble">
+            <label for="mid" class="title-effects">MID</label>
+            <input type="range" min="0" max="1" value="0.5" step="0.01" id="mid">
+            <label for="treble" class="title-effects">TREBLE</label>
+            <input type="range" min="0" max="1" value="0.5" step="0.01" id="treble">
         </div>
     </div>
 
@@ -47,5 +47,6 @@
         <div class="made-css"><i class="devicon-css3-plain icon-made"></i></div>
         <div class="made-js"><i class="devicon-javascript-plain icon-made"></i></div>
     </div>
+
 </body>
 </html>
