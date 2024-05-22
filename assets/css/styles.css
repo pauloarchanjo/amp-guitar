@@ -95,6 +95,31 @@ input[type="range"]::-webkit-slider-thumb {
     cursor: pointer;
 }
 
+.recording-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0 0;
+}
+
+.button {
+    padding: 0.4rem;
+    background: var(--color-white);
+    border-style: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    border-radius: 0.2rem;
+}
+
+.counter {
+    font-size: 1rem;
+    font-weight: 500;
+    background: #1f1f1f;
+    padding: 0.4rem;
+    border-radius: 0.2rem;
+}
+
 /* Estilos da grid */
 .grid {
     display: grid;
